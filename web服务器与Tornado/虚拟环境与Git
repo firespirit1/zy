@@ -1,0 +1,395 @@
+# 虚拟环境与Git
+
+## 一、`MVC`网站框架
+
+为了更好的开发我们的服务器, 我们需要对我们的程序进⾏⼀些规划。
+通常使⽤的⼀种⽅式便是 MVC 式的结构。
+
+![1568200769328](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568200769328.png)
+
+`MVC`模式（Model–view–controller）是软件⼯程中的⼀种软件架构模式, 把软件系统分为三个基本部分：
+
+- 模型（Model）：它是程序操作的数据或信息
+- 视图（View）：它提供给用户的操作界面是程序的外壳
+- 控制器（Controller）:它负责根据用户从”视图层“输入指令，x选取“数据层”中的数据，然后对其进行响应的操作，产生最终结果。
+
+这种模式的特点是构建简单，层次清晰，代码可复用性好，模块之间的耦合度低
+
+对应到我们的服务器程序，简单来说就是一些模块只负责页面显示，另一些模块只负责数据模型的定义和数据的操作，其他模块负责连接着两个部分，并进行必要的逻辑处理。
+
+对应到程序细节
+我们可以按照程序功能不同，分为 3 个模块。
+
+
+
+![1568201298673](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568201298673.png)
+
+![1568201310020](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568201310020.png)
+
+## 二、虚拟环境
+
+实际⼯作中，我们可能同时要维护若⼲个项⽬，每个项⽬使⽤的软件包、版本可能都不⼀样，⽐如项⽬
+A 使⽤ tornado 4.3，⽽项⽬ B 使⽤ tornado 6.0 版，这时如果将两个版本同时装到全局的 Python 环
+境下就会冲突。
+所以我们要为不同的项⽬单独设置它运⾏所需的环境，这就需要借助虚拟环境管理。
+
+1.安装
+
+```
+pip install virtualenv
+```
+
+2.创建虚拟环境
+
+```
+cd ~/你的项目文件夹
+#创建虚拟环境
+#虚拟环境可以创建到任何位置，但一般与项目文件夹放在一起
+virtualenv xxx(虚拟环境名称)
+```
+
+3.加在虚拟环境
+
+```
+source xxx/bin/activate #激活虚拟环境
+```
+
+4.退出虚拟环境
+
+```
+deactivate # 当开发完成后，可以退出当前虚拟环境
+```
+
+![1568250982645](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568250982645.png)
+
+## 三、版本控制工具与git
+
+### 版本控制工具的作用
+
+1.能够追踪全部代码的状态
+
+2.能够进行版本之间的差异对比
+
+3.能够进行版本回滚
+
+4.能够协助多个开发者进行代码合并
+
+### 常见的版本控制工具
+
++ `CVS`: 基本退出了历史舞台
+
++ `svn:`中⼼化的版本控制⼯具, 需要有⼀台中⼼服务器
+
+  
+
+![1568202091951](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568202091951.png)
+
++ `git:` 分布式的版本控制⼯具, 中⼼服务器不再是必需的
+
+  ![1568202129858](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568202129858.png)
+
++ `hg`: 纯 Python 开发的版本控制⼯具
++ `Github`: 依托 Git ⽽创建的⼀个平台，有独⽴的公司在运作。
++ 备注：所有⽂本类的东⻄都可以交由版本控制⼯具来管理
+
+### Git的历史
+
+Git 最初由 Linus 为了维护 Linux 内核源码⽽开发。
+Linus 当时因不堪忍受早期版本控制⼯具的各种问题，最终决定⾃⼰开发了⼀个，并且将它开源出来，
+供所有⼈使⽤。
+
+### 1.起步
+
+- 配置自己的账号和邮箱
+
+```
+git config --global user.name '你的名字'
+git config --global user.email '你的邮箱'
+#会产生一个.gitconfig文件
+#可以通过 cat ~/.gitconfig查看
+```
+
++ 设置要忽略的文件
+  + 对于不需要让 Git 追踪的⽂件可以在项⽬⽬录下创建 `.gitignore·`⽂件
+
+```
+touch .gitignore
+vim .gitignore #打开文件
+```
+
+`.gitignore `⽂件中可以写需要忽略的⽂件名，或是某⼀类⽂件的通配符, 如下
+
+```
+*.pyc
+*.log
+*.sqlite3
+.DS_Store
+.venv/
+.idea/
+__pycache__/
+```
+
++ git init ：对仓库进行初始化，产生一个.git的目录，这个文件夹就是本地仓库
++ 将文件夹下的所有文件添加到“暂存区”
+
+```
+git add 文件名 
+```
+
++ get reset xxx :将“缓存区”中的文件取消暂存状态
+
+使用 git status查看被追踪的文件（查看当前分支状态）
+
+> 补充：
+>
+> 中途修改  .gitignore 文件的使用git status 命令会提示：尚未暂存以备提交的变更。需要：
+>
+> git add .    或者  git add ./
+
++ 提交：将暂存区中的代码提交到本地仓库
+
+```
+ git commit -m '第一个版本'
+```
+
++ 查看提交历史
+
+```
+git log
+```
+
+结果：
+
+```
+commit 14bf7f34ec6113dc8533f1b2c1cc8c682b1fd7bf
+Author: zy <2280531511@qq.com>
+Date:   Wed Sep 11 15:47:31 2019 +0800
+#commit后面跟着的是id
+```
+
+### 发布（以github为例）
+
+![1568210458047](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568210458047.png)
+
+选好填好后
+
+如果通过命令行推送一个已经存在的库，执行
+
++ git remote add origin https://github.com/firespirit1/day3.git
+
+#remote：远程
+
+#作用：添加配置
+
++ git push -u origin master（第一次写，后面更新啥的直接写git push）
+
+ #把本地的东西推送到远程（上游的）origin仓库，对应的是远程仓#库的master分支
+
+#-u 是up的意思，上游
+
+
+
++ 配置密钥
+
+  ```
+  ssh-keygen#一直回车  #作用：在~/.目录下生成一对公钥和密钥
+  cd ~/.ssh
+  cat id_rsa.pub #获取公钥
+  #复制公钥
+  #打开github 点击头像小图标，选择settings--->选择SSH and GPG Keys---->新建SSH Keys
+  
+  #获取密钥：cat id_rsa  不能给任何人！！！
+  ```
+
+  ![1568212110365](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568212110365.png)
+
+### 克隆远程仓库
+
++ 选择clone or download---->复制地址
+
+![1568213120119](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568213120119.png)
+
++ 在终端当中
+
+```
+git clone 地址(只第一次，克隆，之后获取更新只要用pull)
+
+git clone 地址 文件夹1   将克隆的文件下载到文件夹1中
+```
+
+### Pull拉取更新
+
+```
+#远程推送
+git add 文件名
+git commit -m '备注'
+git push
+
+#其他用户拉取更新
+git pull（每次更新时拿取更新执行）
+
+```
+
+> fetch 也是拉取，但是不合并
+
+### 分支管理
+
+同时修改时：要先将别人的修改拿取下来，合并，然后 将自己的修改推送上去
+
+git pull 
+
+git log --graph#查看历史修改记录 带分支的
+
+相同的修改只会保留一份
+
+#### 解决冲突
+
++ git push/pull   发现与别人修改的代码有冲突
++ git pull   将线上代码拉取到本地
++ git status   找到冲突代码都有哪些，冲突文件的状态：both modified
++ 逐一打开冲突文件，逐行解决冲突
++ 冲突代码解决后，按照冲突标记代码中冲突的标记删除
++ git  add./
++ git commit -m '解决冲突，进行了一次合并'
++ git push
+
+#### 分支
+
++ 创建分支
+
+```
+git branch 分支名
+```
+
++ 切换分支
+
+```
+git checkout 分支名
+```
+
++ 切换分支，如果不存在则自动创建并且切换（切换同时创建）
+
+
+```
+  git checkout -b 分支名
+```
+
++ 在各自的分支里面开发不同的模块
+
+```
+#举例
+touch like.py
+vim like.py
+```
+
++ 合并分支
+  + 每个开发者执行以下代码：
+
+```
+#git help merge
+git checkout master
+git pull
+git merge 分支名  #合并分支
+#若是有冲突则解决冲突
+git push
+```
+
+> 小技巧：
+>
+> git checkout  -    :回到之前的分支
+>
+> cd -   ：回到上一次的目录
+
+### Checkout代码回滚与撤销修改
+
+回滚：通过每个版本的id，可以通过git log 查看
+
+```
+git checkout id（只要能区分，只写前面几位也可以）#进入老版本
+```
+
+```
+git checkout master# 进入到最新状态
+```
+
+可以进行简单的代码还原，但是一定要是没有add的文件（add过了，在暂存区，也可以用reset退出暂存区，也可以执行），也没有提交。
+
+```
+git  查看修改的文件
+git checkout 修改的文件
+```
+
+### Blame追责
+
+git blame 文件名
+
+### 2.必须要掌握的Git 命令
+
+![1568202710402](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568202710402.png)
+
+![1568202726243](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568202726243.png)
+
+3. ⽤游戏的⽅式练习 Git
+请点击 https://learngitbranching.js.org/
+
+### 4.练习
+
+1. 在 Github.com 上建⽴⾃⼰的账号，将前⼏天写的代码提交并推送上去
+2. 每次代码更新后，提交、推送
+
+### 补充：
+
+查看python路径：
+
+```
+which python
+```
+
+列出所有安装包和版本信息
+
+```
+pip list
+```
+
+ ```
+ #或者
+pip freeze  
+#这种 方式比较好，因为他的格式是以来的安装包=='版本信息'
+ ```
+
+把所有的版本信息放到文件当中
+
+```
+pip freeze > requirements.txt
+```
+
+
+
+其他用户可以通过安装 requirements.txt来使用别人的虚拟环境
+
+```
+virtualenv env   #创建虚拟环境
+source env/bin/activate  #激活虚拟环境
+pip install -r requirements.txt #安装
+```
+
+
+
+文件对比
+
+```
+git diff 文件1 文件2  #缺点：不太直观
+git diff 文件1^  文件1  #（文件1^表示文件1 的上一个版本）
+```
+
+查看git能够使用的一些命令
+
+```
+git help
+```
+
+对比：
+
+pip：安装python烦人包
+
+apt安装系统包

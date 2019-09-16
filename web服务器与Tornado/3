@@ -1,0 +1,134 @@
+注意点：不要写与系统内建函数、自带库、第三方库同名变量、函数、模块同名的文件名
+
+
+
+懒加载 /惰性加载---->惰性求值
+
+
+
+virtualenv xxx
+
+source xxx/bin/activate
+
+![1568173776596](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568173776596.png)
+
+版本控制工具的作用
+
+1.能够追踪全部代码的状态
+
+2.能够进行版本之间的差异对比
+
+3.能够进行版本回滚
+
+4.能够协助多个开发者进行代码合并
+
+
+
+![1568190121373](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568190121373.png)
+
+git reset xxx 将暂存区中的文件取消暂存状态
+
+
+
+
+
+
+
+
+
+git config --global user.name 'zy'
+
+git config --global user.email '2280531511@qq.com'
+
+cd day3
+
+
+
+ssh-keygen  (之后回车)
+
+cd ~/.ssh
+
+ls
+
+cat id_rsa.pub
+
+![1568189740174](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568189740174.png)
+
+
+
+
+
+更新：
+
+git clone 只要一开始执行一次就好
+
+git pull 将远程仓库的更新，拉取到本地仓库
+
+
+
+git push
+
+
+
+
+
+
+
+
+
+
+
+哈希类型
+
+json
+
+钩子函数：触发式的执行方式
+
+![1568603068185](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568603068185.png)
+
+![1568603089020](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568603089020.png)
+
+![1568603338794](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568603338794.png)
+
+
+
+
+
+![1568603577780](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568603577780.png)
+
+![1568613549595](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1568613549595.png)
+
+
+
+
+
+
+
+var ws = new WebSocket("ws://10.11.55.227:8000/msg")
+ws.onmessage = function(event) {
+    console.log("收到了数据:", event.data)}
+
+
+
+
+
+type（name,bases,dict）
+
+name:名字
+
+bases:继承的内容
+
+dict:属性字典
+
+
+
+uuid：
+
+u：全局
+
+u：unique 唯一
+
+id：identity
+
+
+

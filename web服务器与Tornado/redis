@@ -1,0 +1,11 @@
+redis里面的数据存储是“键值对”的方式，一个key对应
+
+ set password "123456" ex 300 
+
+ex是过期时间 300秒
+
+ttl 是查看
+
+incr 自增
+
+zadd 有序集合
